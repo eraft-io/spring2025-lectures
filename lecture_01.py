@@ -360,7 +360,7 @@ def data():
 
     text("## Data curation")
     text("- Data does not just fall from the sky.")
-    look_at_web_data()
+    # look_at_web_data()
     text("- Sources: webpages crawled from the Internet, books, arXiv papers, GitHub code, etc.")
     text("- Appeal to fair use to train on copyright data? "), link("https://arxiv.org/pdf/2303.15715.pdf")
     text("- Might have to license data (e.g., Google with Reddit data) "), article_link("https://www.reuters.com/technology/reddit-ai-content-licensing-deal-with-google-sources-say-2024-02-22/")
@@ -379,15 +379,15 @@ def data():
     text("- Leaderboard: minimize perplexity given token budget")
 
 
-def look_at_web_data():
-    urls = get_common_crawl_urls()[:3]  # @inspect urls
-    documents = list(read_common_crawl(urls[1], limit=300))
-    random.seed(40)
-    random.shuffle(documents)
-    documents = markdownify_documents(documents[:10])
-    write_documents(documents, "var/sample-documents.txt")
-    link(title="[sample documents]", url="var/sample-documents.txt")
-    text("It's a wasteland out there!  Need to really process the data.")
+# def look_at_web_data():
+#     urls = get_common_crawl_urls()[:3]  # @inspect urls
+#     documents = list(read_common_crawl(urls[1], limit=300))
+#     random.seed(40)
+#     random.shuffle(documents)
+#     documents = markdownify_documents(documents[:10])
+#     write_documents(documents, "var/sample-documents.txt")
+#     link(title="[sample documents]", url="var/sample-documents.txt")
+#     text("It's a wasteland out there!  Need to really process the data.")
 
 
 def alignment():
