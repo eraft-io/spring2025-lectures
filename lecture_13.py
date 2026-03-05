@@ -4,13 +4,13 @@ from references import dclm_2024, nemotron_cc_2024, olmo2, llama3, gpt2, openweb
 
 
 def main():
-    text("Previous lectures: how to train a model *given data*")
-    text("Next two lectures: *what data* should we train on?")
+    text("Previous lectures: how to train a model *given data* <br/> 前几讲：如何*给定数据*训练模型")
+    text("Next two lectures: *what data* should we train on? <br/> 接下来两讲：我们应该在*什么数据*上训练？")
 
     introduction()
 
-    text("### Pretraining")
-    text("Let's peer into the data of some popular models.")
+    text("### Pretraining <br/> ### 预训练")
+    text("Let's peer into the data of some popular models. <br/> 让我们窥探一些流行模型的数据。")
     bert()                # Wikipedia, books (trained BERT) [2019]
     gpt2_webtext()        # pages based on Reddit links (trained GPT-2) [2019]
     common_crawl()        # Web crawl
@@ -28,54 +28,54 @@ def main():
 
     copyright()
 
-    text("### Mid-training + post-training")
-    text("Let's focus on particular capabilities.")
+    text("### Mid-training + post-training <br/> ### 中期训练 + 后训练")
+    text("Let's focus on particular capabilities. <br/> 让我们专注于特定能力。")
     long_context()        # Long context
     tasks()               # Tasks based on standard datasets
     instruction_chat()    # Instruction following and chat
 
-    text("### Summary")
-    text("- Key lesson: Data does not fall from the sky. You have to work to get it.")
-    text("- Live service => raw data => processed data (conversion, filtering, deduplication)")
-    text("- Data is the key ingredient that differentiates language models")
-    text("- Legal and ethical issues (e.g., copyright and privacy)")
-    text("- Much of this pipeline is heuristic, many opportunities to improve!")
+    text("### Summary <br/> ### 总结")
+    text("- Key lesson: Data does not fall from the sky. You have to work to get it. <br/> - 关键教训：数据不会从天而降。你必须努力获取它。")
+    text("- Live service => raw data => processed data (conversion, filtering, deduplication) <br/> - 实时服务 => 原始数据 => 处理数据（转换、过滤、去重）")
+    text("- Data is the key ingredient that differentiates language models <br/> - 数据是区分语言模型的关键成分")
+    text("- Legal and ethical issues (e.g., copyright and privacy) <br/> - 法律和伦理问题（如版权和隐私）")
+    text("- Much of this pipeline is heuristic, many opportunities to improve! <br/> - 这个流程的很多部分是启发式的，有很多改进机会！")
 
 
 def introduction():
-    text("Hot take: **data** is the most important thing to get right in training language models.")
+    text("Hot take: **data** is the most important thing to get right in training language models. <br/> 热门观点：**数据**是训练语言模型中最重要的事情。")
 
-    text("One justification: let's see what companies disclose.")
-    text("Open-weight models (e.g., Llama 3 "), link(llama3), text(" have full transparency into architecture and even training procedures")
-    text("...but basically no information on data.")
+    text("One justification: let's see what companies disclose. <br/> 一个理由：让我们看看公司披露了什么。")
+    text("Open-weight models (e.g., Llama 3 "), link(llama3), text(" have full transparency into architecture and even training procedures <br/> 开源权重模型（如 Llama 3）对架构甚至训练程序完全透明")
+    text("...but basically no information on data. <br/> ...但基本上没有关于数据的信息。")
     image("images/llama3-data.png", width=700)
     
-    text("Reasons for secrecy: (i) competitive dynamics and (ii) copyright liability")
+    text("Reasons for secrecy: (i) competitive dynamics and (ii) copyright liability <br/> 保密原因：(i) 竞争动态和 (ii) 版权责任")
 
-    text("- Before foundation models, data work meant heavy annotation of labeled data for supervised learning.")
-    text("- Now there's less annotation, but there's still a lot of curation and cleaning.")
-    text("- Data is fundamentally a long-tail problem, scales with human effort (unlike architectures, systems).")
+    text("- Before foundation models, data work meant heavy annotation of labeled data for supervised learning. <br/> - 在基础模型之前，数据工作意味着为监督学习进行大量标记数据注释。")
+    text("- Now there's less annotation, but there's still a lot of curation and cleaning. <br/> - 现在注释少了，但仍然有很多策划和清理工作。")
+    text("- Data is fundamentally a long-tail problem, scales with human effort (unlike architectures, systems). <br/> - 数据本质上是长尾问题，随人类努力而扩展（与架构、系统不同）。")
 
-    text("Stages of training:")
-    text("1. Pre-training: train on raw text (e.g., documents from the web)")
-    text("2. Mid-training: train more on high quality data to enhance capabilities")
-    text("3. Post-training: fine-tune on instruction following data (or do reinforcement learning) for instruction following")
-    text("In practice, the lines are blurry and there could be more stages.")
-    text("...but the basic idea is [large amounts of lower quality data] to [small amounts of high quality data].")
+    text("Stages of training: <br/> 训练阶段：")
+    text("1. Pre-training: train on raw text (e.g., documents from the web) <br/> 1. 预训练：在原始文本上训练（如来自网页的文档）")
+    text("2. Mid-training: train more on high quality data to enhance capabilities <br/> 2. 中期训练：在高质量数据上更多训练以增强能力")
+    text("3. Post-training: fine-tune on instruction following data (or do reinforcement learning) for instruction following <br/> 3. 后训练：在指令遵循数据上微调（或进行强化学习）以进行指令遵循")
+    text("In practice, the lines are blurry and there could be more stages. <br/> 在实践中，界限模糊，可能有更多阶段。")
+    text("...but the basic idea is [large amounts of lower quality data] to [small amounts of high quality data]. <br/> ...但基本思想是[大量低质量数据]到[少量高质量数据]。")
 
-    text("Terminology:")
-    text("- Base model: after pre-training + mid-training")
-    text("- Instruct/chat model: after post-training")
+    text("Terminology: <br/> 术语：")
+    text("- Base model: after pre-training + mid-training <br/> - 基础模型：预训练 + 中期训练后")
+    text("- Instruct/chat model: after post-training <br/> - 指令/聊天模型：后训练后")
 
-    text("Example (OLMo from AI2) "), link(olmo2)
-    text("1. Pretraining")
+    text("Example (OLMo from AI2) <br/> 示例（来自 AI2 的 OLMo）"), link(olmo2)
+    text("1. Pretraining <br/> 1. 预训练")
     image("images/olmo2-pretraining.png", width=600)
-    text("2. Mid-training")
+    text("2. Mid-training <br/> 2. 中期训练")
     image("images/olmo2-dolmino.png", width=600)
-    text("3. Post-training "), link("https://arxiv.org/pdf/2411.15124")
+    text("3. Post-training <br/> 3. 后训练"), link("https://arxiv.org/pdf/2411.15124")
     image("images/tulu.png", width=600)
 
-    text("What are these datasets?  How are they chosen and processed?")
+    text("What are these datasets?  How are they chosen and processed? <br/> 这些数据集是什么？它们是如何选择和处理的？")
 
 
 def framework():
@@ -378,106 +378,106 @@ def refinedweb():
     text("FineWeb "), article_link("https://huggingface.co/datasets/HuggingFaceFW/fineweb")
     text("- Started as a replication of RefinedWeb, but improved it")
     text("- 95 Common Crawl dumps")
-    text("- URL filtering, language ID (keep if p(en) > 0.65)")
-    text("- Filtering: Gopher, C4, more manual rules")
-    text("- Fuzzy deduplication via MinHash")
-    text("- Anonymize email and public IP addresses (PII)")
-    text("Result: 15T tokens")
+    text("- URL filtering, language ID (keep if p(en) > 0.65) <br/> - URL 过滤、语言 ID（如果 p(en) > 0.65 则保留）")
+    text("- Filtering: Gopher, C4, more manual rules <br/> - 过滤：Gopher、C4、更多手动规则")
+    text("- Fuzzy deduplication via MinHash <br/> - 通过 MinHash 进行模糊去重")
+    text("- Anonymize email and public IP addresses (PII) <br/> - 匿名化电子邮件和公共 IP 地址（PII）")
+    text("Result: 15T tokens <br/> 结果：15T token")
 
 
 def dolma():
-    text("Dolma "), link("https://arxiv.org/pdf/2402.00159")
+    text("Dolma <br/> Dolma "), link("https://arxiv.org/pdf/2402.00159")
     image("https://miro.medium.com/v2/resize:fit:1400/1*-0Qqhvu7JD6Y9JgsfKJdxw.png", width=700)
 
-    text("- Reddit: from the Pushshift project (2005-2023), include submissions and comments separately")
-    text("- PeS2o: 40M academic papers from Semantic Scholar")
-    text("- C4, Project Gutenberg, Wikipedia/Wikibooks")
+    text("- Reddit: from the Pushshift project (2005-2023), include submissions and comments separately <br/> - Reddit：来自 Pushshift 项目（2005-2023），分别包括提交和评论")
+    text("- PeS2o: 40M academic papers from Semantic Scholar <br/> - PeS2o：来自 Semantic Scholar 的 4000 万篇学术论文")
+    text("- C4, Project Gutenberg, Wikipedia/Wikibooks <br/> - C4、Project Gutenberg、Wikipedia/Wikibooks")
 
-    text("Common Crawl processing")
-    text("- Language identification (fastText classifier), keep English")
-    text("- Quality filtering (Gopher, C4 rules), avoid model-based filtering")
-    text("- Toxicity filtering using rules and Jigsaw classifier")
-    text("- Deduplication using Bloom filters")
+    text("Common Crawl processing <br/> Common Crawl 处理")
+    text("- Language identification (fastText classifier), keep English <br/> - 语言识别（fastText 分类器），保留英语")
+    text("- Quality filtering (Gopher, C4 rules), avoid model-based filtering <br/> - 质量过滤（Gopher、C4 规则），避免基于模型的过滤")
+    text("- Toxicity filtering using rules and Jigsaw classifier <br/> - 使用规则和 Jigsaw 分类器进行毒性过滤")
+    text("- Deduplication using Bloom filters <br/> - 使用 Bloom 过滤器进行去重")
 
-    text("Result: 3T tokens")
+    text("Result: 3T tokens <br/> 结果：3T token")
 
 def dclm():
-    text("DataComp-LM "), link(dclm_2024)
-    text("- Goal: define a standard dataset for trying out different data processing algorithms")
-    text("- Processed CommonCrawl to produce DCLM-pool (240T tokens)")
-    text("- DCLM-baseline: filtered down DCLM-pool using quality classifier")
+    text("DataComp-LM <br/> DataComp-LM "), link(dclm_2024)
+    text("- Goal: define a standard dataset for trying out different data processing algorithms <br/> - 目标：定义一个标准数据集，用于尝试不同的数据处理算法")
+    text("- Processed CommonCrawl to produce DCLM-pool (240T tokens) <br/> - 处理 CommonCrawl 以生成 DCLM-pool（240T token）")
+    text("- DCLM-baseline: filtered down DCLM-pool using quality classifier <br/> - DCLM-baseline：使用质量分类器过滤 DCLM-pool")
     image("images/dclm-filter.png", width=800)
 
-    text("### Model-based filtering")
-    text("Positive examples (200K):")
-    text("- [OpenHermes-2.5](https://huggingface.co/datasets/teknium/OpenHermes-2.5): mostly GPT-4 generated instruction data ([examples](https://huggingface.co/datasets/teknium/OpenHermes-2.5/viewer/default/train))")
-    text("- [ELI5](https://www.reddit.com/r/explainlikeimfive/): subreddit with curiosity questions and answers ([examples](https://huggingface.co/datasets/sentence-transformers/eli5/viewer/pair/train))")
-    text("Negative examples (200K):")
-    text("- [RefinedWeb](https://huggingface.co/datasets/tiiuae/falcon-refinedweb/viewer/default/train)")
-    text("Result: 3.8T tokens")
+    text("### Model-based filtering <br/> ### 基于模型的过滤")
+    text("Positive examples (200K): <br/> 正例（20万）：")
+    text("- [OpenHermes-2.5](https://huggingface.co/datasets/teknium/OpenHermes-2.5): mostly GPT-4 generated instruction data ([examples](https://huggingface.co/datasets/teknium/OpenHermes-2.5/viewer/default/train)) <br/> - [OpenHermes-2.5](https://huggingface.co/datasets/teknium/OpenHermes-2.5)：主要是 GPT-4 生成的指令数据（[示例](https://huggingface.co/datasets/teknium/OpenHermes-2.5/viewer/default/train)）")
+    text("- [ELI5](https://www.reddit.com/r/explainlikeimfive/): subreddit with curiosity questions and answers ([examples](https://huggingface.co/datasets/sentence-transformers/eli5/viewer/pair/train)) <br/> - [ELI5](https://www.reddit.com/r/explainlikeimfive/)：带有好奇心问题和答案的子版块（[示例](https://huggingface.co/datasets/sentence-transformers/eli5/viewer/pair/train)）")
+    text("Negative examples (200K): <br/> 负例（20万）：")
+    text("- [RefinedWeb](https://huggingface.co/datasets/tiiuae/falcon-refinedweb/viewer/default/train) <br/> - [RefinedWeb](https://huggingface.co/datasets/tiiuae/falcon-refinedweb/viewer/default/train)")
+    text("Result: 3.8T tokens <br/> 结果：3.8T token")
 
-    text("Trained a fastText classifier, run it on all of DCLM-pool")
-    text("This quality classifier outperforms other filtering methods:")
+    text("Trained a fastText classifier, run it on all of DCLM-pool <br/> 训练了一个 fastText 分类器，在 DCLM-pool 上运行")
+    text("This quality classifier outperforms other filtering methods: <br/> 这种质量分类器优于其他过滤方法：")
     image("images/dclm-quality.png", width=600)
 
 
 def nemotron_cc():
-    text("Nemotron-CC "), link(nemotron_cc_2024)
-    text("- FineWebEdu and DCLM filter too aggressively (remove 90% of data)")
-    text("- Need moar tokens (but preserve quality)")
-    text("- For HTML -> text, used jusText (not trafilatura) because it returned more tokens")
+    text("Nemotron-CC <br/> Nemotron-CC "), link(nemotron_cc_2024)
+    text("- FineWebEdu and DCLM filter too aggressively (remove 90% of data) <br/> - FineWebEdu 和 DCLM 过滤过于激进（移除 90% 的数据）")
+    text("- Need moar tokens (but preserve quality) <br/> - 需要更多 token（但保持质量）")
+    text("- For HTML -> text, used jusText (not trafilatura) because it returned more tokens <br/> - 对于 HTML -> 文本，使用 jusText（而非 trafilatura），因为它返回更多 token")
 
-    text("Classifier ensembling")
-    text("- Prompt Nemotron-340B-instruct to score FineWeb documents based on educational value, distill into faster model")
-    text("- DCLM classifier")
+    text("Classifier ensembling <br/> 分类器集成")
+    text("- Prompt Nemotron-340B-instruct to score FineWeb documents based on educational value, distill into faster model <br/> - 提示 Nemotron-340B-instruct 根据教育价值为 FineWeb 文档评分，蒸馏到更快的模型")
+    text("- DCLM classifier <br/> - DCLM 分类器")
 
-    text("Synthetic data rephrasing")
-    text("- For low-quality data, use LM to rephrase low-quality data")
-    text("- For high-quality data, use LM to generate tasks (QA pairs, extract key information, etc.)")
+    text("Synthetic data rephrasing <br/> 合成数据改写")
+    text("- For low-quality data, use LM to rephrase low-quality data <br/> - 对于低质量数据，使用 LM 改写低质量数据")
+    text("- For high-quality data, use LM to generate tasks (QA pairs, extract key information, etc.) <br/> - 对于高质量数据，使用 LM 生成任务（问答对、提取关键信息等）")
 
-    text("Result: 6.3T tokens (HQ subset is 1.1T)")
-    text("For reference, Llama 3 trained on 15T, Qwen3 trained on 36T")
+    text("Result: 6.3T tokens (HQ subset is 1.1T) <br/> 结果：6.3T token（高质量子集为 1.1T）")
+    text("For reference, Llama 3 trained on 15T, Qwen3 trained on 36T <br/> 作为参考，Llama 3 在 15T 上训练，Qwen3 在 36T 上训练")
     image("images/nemotron-results.png", width=800)
 
 
 def copyright():
-    text("Lots of lawsuits around generative AI, mostly around copyright "), article_link("https://www.bakerlaw.com/services/artificial-intelligence-ai/case-tracker-artificial-intelligence-copyrights-and-class-actions/")
+    text("Lots of lawsuits around generative AI, mostly around copyright <br/> 围绕生成式 AI 有很多诉讼，主要是关于版权"), article_link("https://www.bakerlaw.com/services/artificial-intelligence-ai/case-tracker-artificial-intelligence-copyrights-and-class-actions/")
 
-    text("### Intellectual property law")
-    text("- Goal: *incentivize* the creation of intellectual goods")
-    text("- Types of intellectual property: copyright, patents, trademarks, trade secrets.")
+    text("### Intellectual property law <br/> ### 知识产权法")
+    text("- Goal: *incentivize* the creation of intellectual goods <br/> - 目标：*激励*知识产品的创造")
+    text("- Types of intellectual property: copyright, patents, trademarks, trade secrets. <br/> - 知识产权类型：版权、专利、商标、商业秘密。")
 
-    text("### Copyright law")
-    text("- Goes back to 1709 in England (Statute of Anne), first time regulated by governments and courts "), article_link("https://en.wikipedia.org/wiki/Statute_of_Anne")
-    text("- In United States, most recent: Copyright Act of 1976 "), article_link("https://en.wikipedia.org/wiki/Copyright_Act_of_1976")
-    text("- Copyright protection applies to 'original works of authorship fixed in any tangible medium of expression, now known or later developed, from which they can be perceived, reproduced, or otherwise communicated, either directly or with the aid of a machine or device'")
+    text("### Copyright law <br/> ### 版权法")
+    text("- Goes back to 1709 in England (Statute of Anne), first time regulated by governments and courts <br/> - 追溯到 1709 年英国的安妮法案，首次由政府和法院监管"), article_link("https://en.wikipedia.org/wiki/Statute_of_Anne")
+    text("- In United States, most recent: Copyright Act of 1976 <br/> - 在美国，最近的是 1976 年版权法"), article_link("https://en.wikipedia.org/wiki/Copyright_Act_of_1976")
+    text("- Copyright protection applies to 'original works of authorship fixed in any tangible medium of expression, now known or later developed, from which they can be perceived, reproduced, or otherwise communicated, either directly or with the aid of a machine or device' <br/> - 版权保护适用于'固定在任何有形表达媒介中的原创作品，无论是现在已知还是以后开发的，可以直接或通过机器或设备的帮助被感知、复制或以其他方式传播'")
 
-    text("- Original works, so collections not copyrightable (e.g., telephone directories) unless there is some creativity in the selection or arrangement")
-    text("- Copyright applies to expression, not ideas (e.g., quicksort)")
+    text("- Original works, so collections not copyrightable (e.g., telephone directories) unless there is some creativity in the selection or arrangement <br/> - 原创作品，因此汇编不受版权保护（如电话簿），除非在选择或排列中有一定创造性")
+    text("- Copyright applies to expression, not ideas (e.g., quicksort) <br/> - 版权适用于表达，而非思想（如快速排序）")
 
-    text("- Expanded scope from 'published' (1909) to 'fixed' (1976)")
-    text("- Registration not required for copyright protection (in contrast with patents)")
-    text("- Threshold for copyright is extremely low (e.g., your website is copyrighted)")
+    text("- Expanded scope from 'published' (1909) to 'fixed' (1976) <br/> - 范围从'已出版'（1909）扩展到'已固定'（1976）")
+    text("- Registration not required for copyright protection (in contrast with patents) <br/> - 版权保护不需要注册（与专利不同）")
+    text("- Threshold for copyright is extremely低 (e.g., your website is copyrighted) <br/> - 版权门槛极低（如，你的网站受版权保护）")
 
-    text("- Registration is required before creator can sue someone for copyright infringement")
-    text("- Costs $65 to register "), article_link("https://www.copyright.gov/about/fees.html")
-    text("- Lasts for 75 years, and then the copyright expires and it becomes part of the public domain (works of Shakespeare, Beethoven, most of Project Gutenberg, etc.)")
+    text("- Registration is required before creator can sue someone for copyright infringement <br/> - 创作者在起诉他人侵犯版权之前需要注册")
+    text("- Costs $65 to register <br/> - 注册费用为 65 美元"), article_link("https://www.copyright.gov/about/fees.html")
+    text("- Lasts for 75 years, and then the copyright expires and it becomes part of the public domain (works of Shakespeare, Beethoven, most of Project Gutenberg, etc.) <br/> - 持续 75 年，然后版权到期，成为公共领域的一部分（莎士比亚、贝多芬的作品、Project Gutenberg 的大部分等）")
 
-    text("Summary: most things on the Internet are actually copyrighted.")
+    text("Summary: most things on the Internet are actually copyrighted. <br/> 总结：互联网上的大部分东西实际上都受版权保护。")
 
-    text("How to use a copyrighted work:")
-    text("1. Get a license for it.")
-    text("2. Appeal to the fair use clause.")
+    text("How to use a copyrighted work: <br/> 如何使用受版权保护的作品：")
+    text("1. Get a license for it. <br/> 1. 获得许可。")
+    text("2. Appeal to the fair use clause. <br/> 2. 诉诸合理使用条款。")
 
-    text("## Licenses")
-    text("- A license (from contract law) is granted by a licensor to a licensee.")
-    text("- Effectively, 'a license is a promise not to sue'.")
+    text("## Licenses <br/> ## 许可证")
+    text("- A license (from contract law) is granted by a licensor to a licensee. <br/> - 许可（来自合同法）由许可方授予被许可方。")
+    text("- Effectively, 'a license is a promise not to sue'. <br/> - 实际上，'许可是不起诉的承诺'。")
 
-    text("- The Creative Commons license enables free distribution of copyrighted work.")
-    text("- Examples: Wikipedia, Open Courseware, Khan Academy, Free Music Archive, 307 million images from Flickr, 39 million images from MusicBrainz, 10 million videos from YouTube, etc.")
-    text("- Created by Lessig and Eldred in 2001 to bridge public domain and existing copyright")
+    text("- The Creative Commons license enables free distribution of copyrighted work. <br/> - 知识共享许可允许免费分发受版权保护的作品。")
+    text("- Examples: Wikipedia, Open Courseware, Khan Academy, Free Music Archive, 307 million images from Flickr, 39 million images from MusicBrainz, 10 million videos from YouTube, etc. <br/> - 示例：维基百科、开放课件、可汗学院、免费音乐档案、来自 Flickr 的 3.07 亿张图片、来自 MusicBrainz 的 3900 万张图片、来自 YouTube 的 1000 万个视频等。")
+    text("- Created by Lessig and Eldred in 2001 to bridge public domain and existing copyright <br/> - 由 Lessig 和 Eldred 于 2001 年创建，以弥合公共领域和现有版权之间的差距")
 
-    text("Many model developers license data for training foundation models")
+    text("Many model developers license data for training foundation models <br/> 许多模型开发者许可数据用于训练基础模型")
     text("- Google and Reddit "), article_link("https://www.reuters.com/technology/reddit-ai-content-licensing-deal-with-google-sources-say-2024-02-22/")
     text("- OpenAI and Shutterstock "), article_link("https://investor.shutterstock.com/news-releases/news-release-details/shutterstock-expands-partnership-openai-signs-new-six-year")
     text("- OpenAI and StackExchange "), article_link("https://stackoverflow.co/company/press/archive/openai-partnership")
